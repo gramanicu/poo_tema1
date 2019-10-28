@@ -1,10 +1,17 @@
 - name: Setup Java Action
-  uses: actions/setup-java@v1.0.0
 
-  steps:
-  - uses: actions/checkout@latest
-  - uses: actions/setup-java@v1
-    with:
-      java-version: '13.0.0'
-      architecture: x64
-  - run: bash ./src/tema-checker.sh
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        java: [ '1.6', '9.0.x', '13.0.x' ]
+    name: Java ${{ matrix.java }} sample
+    steps:
+      - uses: actions/checkout@master
+      - name: Setup java
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+          architecture: x64
+      - run: bash ./src/tema-checker.sh
