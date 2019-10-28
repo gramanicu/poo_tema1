@@ -1,5 +1,3 @@
-- name: Setup Java Action
-
 jobs:
   build:
     runs-on: ubuntu-latest
