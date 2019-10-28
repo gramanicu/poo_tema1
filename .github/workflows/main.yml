@@ -5,7 +5,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        java: [ '1.6', '9.0.x', '13.0.x' ]
+        java: [ '13.0.x' ]
     name: Java ${{ matrix.java }} sample
     steps:
       - uses: actions/checkout@master
@@ -14,4 +14,4 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
           architecture: x64
-      - run: bash ./src/tema-checker.sh
+      - run: java -jar checker/checkstyle/checkstyle-7.3-all.jar -c checker/checkstyle/poo_checks.xml *  > checkstyle.txt
