@@ -1,4 +1,5 @@
-name: Github Check
+- name: Setup Java Action
+  uses: actions/setup-java@v1.0.0
 
 on: [push]
 
