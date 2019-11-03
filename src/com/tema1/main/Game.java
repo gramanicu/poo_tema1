@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 // This must be unique
-public final class Game {
+final class Game {
     private List<Player> playerList;
     private List<Goods> goodsList;
     private int rounds;
@@ -21,10 +21,9 @@ public final class Game {
         playerList = new ArrayList<>();
         goodsList = new ArrayList<>();
         assetCreator = new GoodsFactory();
-        canRun = false;
     }
 
-    public void load(GameInput data) {
+    void load(GameInput data) {
     // This must be unique
         // Load players strategies
         for (String strategy : data.getPlayerNames()) {
@@ -51,9 +50,28 @@ public final class Game {
         canRun = true;
     }
 
-    public void run() {
-        if(canRun) {
+    void run() {
+        if(!canRun) return;
 
+        while(currentRound < rounds) {
+            bagCreation();
+            goodsDeclaration();
+            inspection();
+            shopSupplying();
+            rounds++;
         }
+
+
     }
+
+    private void bagCreation() {
+
+    }
+
+    private void goodsDeclaration() {}
+
+    private void inspection() {}
+
+    private void shopSupplying() {}
+
 }
