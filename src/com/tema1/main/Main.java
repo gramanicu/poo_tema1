@@ -11,6 +11,6 @@ public final class Main {
 
         Game game = new Game();
         game.load(gameInput);
-
+        game.run();
     }
 }

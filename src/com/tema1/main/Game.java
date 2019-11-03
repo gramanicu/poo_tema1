@@ -11,18 +11,17 @@ import java.util.List;
 public final class Game {
     private List<Player> playerList;
     private List<Goods> goodsList;
-
     private int rounds;
     private int currentRound;
-
     private GoodsFactory assetCreator;
+    private boolean canRun;
 
     Game() {
         currentRound = 0;
         playerList = new ArrayList<>();
         goodsList = new ArrayList<>();
         assetCreator = new GoodsFactory();
-
+        canRun = false;
     }
 
     public void load(GameInput data) {
@@ -49,9 +48,12 @@ public final class Game {
 
         // Load the number of rounds to be played
         rounds = data.getRounds();
+        canRun = true;
     }
 
     public void run() {
+        if(canRun) {
 
+        }
     }
 }
