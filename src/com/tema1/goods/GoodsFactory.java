@@ -86,7 +86,7 @@ public final class GoodsFactory {
 
     private final Map<Integer, Goods> goodsById;
 
-    private GoodsFactory() {
+    public GoodsFactory() {
         goodsById = new HashMap<Integer, Goods>();
 
         initLegalGoods();
