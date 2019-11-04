@@ -23,7 +23,11 @@ final class Game {
         assetCreator = new GoodsFactory();
     }
 
-    void load(GameInput data) {
+    /**
+     * Loads all the data to run the game.
+     * @param data The GameInput data
+     */
+    void load(final GameInput data) {
     // This must be unique
         // Load players strategies
         for (String strategy : data.getPlayerNames()) {
@@ -36,6 +40,8 @@ final class Game {
                     break;
                 case "greedy":
                     playerList.add(new Player(StrategyType.Greedy));
+                    break;
+                default:
                     break;
             }
         }
@@ -50,6 +56,9 @@ final class Game {
         canRun = true;
     }
 
+    /**
+     * Starts the game.
+     */
     void run() {
         if (!canRun) {
             return;
@@ -62,18 +71,11 @@ final class Game {
             shopSupplying();
             rounds++;
         }
-
-
     }
 
-    private void bagCreation() {
-
-    }
-
-    private void goodsDeclaration() {}
-
-    private void inspection() {}
-
-    private void shopSupplying() {}
+    private void bagCreation() { }
+    private void goodsDeclaration() { }
+    private void inspection() { }
+    private void shopSupplying() { }
 
 }

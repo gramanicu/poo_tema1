@@ -1,5 +1,12 @@
 package com.tema1.strategy;
 
-public interface Strategy {
+import com.tema1.goods.Goods;
+import com.tema1.player.Bag;
 
+import java.util.ArrayList;
+
+public interface Strategy {
+    Bag createBag(ArrayList<Goods> cards);
+    void declareGoods();
+    void inspect();
 }
