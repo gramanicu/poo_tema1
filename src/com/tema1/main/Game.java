@@ -2,15 +2,15 @@ package com.tema1.main;
 
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
+import com.tema1.player.Player;
 import com.tema1.strategy.StrategyType;
 
 import java.util.ArrayList;
-import java.util.List;
 
 // This must be unique
 final class Game {
-    private List<Player> playerList;
-    private List<Goods> goodsList;
+    private ArrayList<Player> playerList;
+    private ArrayList<Goods> goodsList;
     private int rounds;
     private int currentRound;
     private GoodsFactory assetCreator;
@@ -51,9 +51,11 @@ final class Game {
     }
 
     void run() {
-        if(!canRun) return;
+        if (!canRun) {
+            return;
+        }
 
-        while(currentRound < rounds) {
+        while (currentRound < rounds) {
             bagCreation();
             goodsDeclaration();
             inspection();
