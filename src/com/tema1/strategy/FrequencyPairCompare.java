@@ -11,6 +11,17 @@ class FrequencyPairCompare implements Comparator<FrequencyPair> {
      */
     @Override
     public int compare(final FrequencyPair o1, final FrequencyPair o2) {
-        return o2.getFrequency() - o1.getFrequency();
+        int diff =  o2.getFrequency() - o1.getFrequency();
+        if (diff != 0) {
+            return diff;
+        }
+
+        diff = o2.getItem().getProfit() - o1.getItem().getProfit();
+        if (diff != 0) {
+            return diff;
+        }
+
+        diff = o2.getItem().getId() - o1.getItem().getId();
+        return diff;
     }
 }
