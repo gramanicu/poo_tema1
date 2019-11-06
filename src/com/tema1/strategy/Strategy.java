@@ -7,6 +7,6 @@ import java.util.ArrayList;
 
 public interface Strategy {
     Bag createBag(ArrayList<Goods> cards);
-    void declareGoods();
+
     void inspect();
 }

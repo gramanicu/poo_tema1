@@ -22,6 +22,7 @@ public class Player {
 
     private Player() {
         money = Constants.START_MONEY;
+        cards = new ArrayList<>();
         playerCount++;
     }
 
@@ -107,15 +108,6 @@ public class Player {
     public void createBag() {
         if (role == RoleType.Trader) {
             strategy.createBag(cards);
-        }
-    }
-
-    /**
-     * The player will declare the goods stored on the bag.
-     */
-    public void declareGoods() {
-        if (role == RoleType.Trader) {
-            strategy.declareGoods();
         }
     }
 

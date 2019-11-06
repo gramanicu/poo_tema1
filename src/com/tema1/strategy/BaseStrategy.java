@@ -1,16 +1,13 @@
 package com.tema1.strategy;
 
 import com.tema1.goods.Goods;
+import com.tema1.goods.GoodsFactory;
 import com.tema1.goods.GoodsType;
 import com.tema1.player.Bag;
 
 import java.util.ArrayList;
 public class BaseStrategy implements Strategy {
-    private boolean noneAvailable;
-
-    public BaseStrategy() {
-        noneAvailable = false;
-    }
+    public BaseStrategy() { }
 
     /**
      * Creates a new bag, based on the players strategy.
@@ -20,31 +17,25 @@ public class BaseStrategy implements Strategy {
     @Override
     public Bag createBag(final ArrayList<Goods> cards) {
         Bag bag = new Bag();
-        ArrayList<Goods> sortedGoods = new ArrayList<>(sortGoods(cards, GoodsType.Legal));
+        // Gets the best item/items available for the strategy
+        FrequencyPair item = chooseGoods(cards);
 
-        // If there are no legal goods, add the illegal item with the biggest profit
-        if (noneAvailable) {
-            sortedGoods = new ArrayList<>(cards);
-            ItemValueCompare valueCompare = new ItemValueCompare();
-            sortedGoods.sort(valueCompare);
-            bag.addItem(sortedGoods.get(0));
+        // If the item type is illegal, use the most profitable illegal item
+        if (item.getItem().getType() == GoodsType.Illegal) {
+            // Declare the bag to contain apples
+            bag.declareItems(GoodsFactory.getInstance().getGoodsById(0));
         } else {
-            bag.setItems(sortedGoods);
+            bag.declareItems(GoodsFactory.getInstance().getGoodsById(item.getItem().getId()));
         }
 
-        return bag;
-    }
+        // Never bribe ^_^
+        bag.setBribe(0);
 
-    /**
-     * Declares to the sheriff what is in the bag.
-     */
-    @Override
-    public void declareGoods() {
-//        if (noneAvailable) {
-//            // Declare apples
-//        } else {
-//
-//        }
+        // Adds the item/items to the bag
+        bag.addItem(GoodsFactory.getInstance()
+                .getGoodsById(item.getItem().getId()), item.getFrequency());
+
+        return bag;
     }
 
     @Override
@@ -53,23 +44,22 @@ public class BaseStrategy implements Strategy {
     }
 
     /**
-     * Will sort the items. Can remove items that are not of the specified type.
-     * @param cards The items to be sorted
-     * @param type The type of the items that should be returned
-     * @return The items, sorted by frequency and filtered to contain only the specified type
+     * Returns item/items, according to the strategy.
+     * @param cards The items to be sorted/filtered
+     * @return A frequency pair, representing a item type and how many of it
      */
-    private ArrayList<Goods> sortGoods(final ArrayList<Goods> cards, final GoodsType type) {
-        noneAvailable = false;
-        /* ToDo implement " by id " sorting, " by profit " sorting, and the edge case for
-            when are not goods of the specified type
-        */
+    private FrequencyPair chooseGoods(final ArrayList<Goods> cards) {
         ArrayList<Goods> uniqueItems = new ArrayList<>();
         ArrayList<Integer> frequency = new ArrayList<Integer>();
 
+        /*
+            Make two arrays, that will contain unique items and their respective
+            frequency
+         */
         for (Goods item : cards) {
-            if (uniqueItems.contains(item)) {
+            if (!uniqueItems.contains(item)) {
                 uniqueItems.add(item);
-                frequency.add(0);
+                frequency.add(1);
             } else {
                 int index = uniqueItems.indexOf(item);
                 Integer value = frequency.get(index);
@@ -80,29 +70,33 @@ public class BaseStrategy implements Strategy {
 
         ArrayList<FrequencyPair> listToSort = new ArrayList<>();
 
+        // Combine the two arrays into a single frequency array
         for (Goods item : uniqueItems) {
             listToSort.add(new FrequencyPair(item, frequency.get(uniqueItems.indexOf(item))));
         }
 
+        // Sort the array, according to the strategy
         FrequencyPairCompare compare = new FrequencyPairCompare();
         listToSort.sort(compare);
 
-        ArrayList<Goods> sortedList = new ArrayList<>();
+        ArrayList<FrequencyPair> sortedList = new ArrayList<>();
 
+        // Filter out the illegal goods
         for (FrequencyPair pair : listToSort) {
-            if (pair.getItem().getType() == type || type == GoodsType.All) {
-                sortedList.add(pair.getItem());
-            }
-
-            if (pair.getItem().getType() == type || type == GoodsType.All) {
-                sortedList.add(pair.getItem());
+            if (pair.getItem().getType() == GoodsType.Legal) {
+                sortedList.add(pair);
             }
         }
 
+        // Check if there are any legal goods
         if (sortedList.size() == 0) {
-            noneAvailable = true;
+            // If there are no legal goods
+            ItemValueCompare valueCompare = new ItemValueCompare();
+            uniqueItems.sort(valueCompare);
+            return new FrequencyPair(uniqueItems.get(0), 1);
+        } else {
+            return sortedList.get(0);
         }
 
-        return sortedList;
     }
 }

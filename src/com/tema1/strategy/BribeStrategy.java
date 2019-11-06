@@ -18,11 +18,6 @@ public class BribeStrategy implements Strategy {
     }
 
     @Override
-    public void declareGoods() {
-
-    }
-
-    @Override
     public void inspect() {
 
     }

@@ -17,11 +17,6 @@ public class GreedyStrategy implements Strategy {
     }
 
     @Override
-    public void declareGoods() {
-
-    }
-
-    @Override
     public void inspect() {
 
     }

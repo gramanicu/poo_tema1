@@ -1,3 +1,3 @@
 package com.tema1.goods;
 
-public enum GoodsType { Legal, Illegal, All }
+public enum GoodsType { Legal, Illegal }
