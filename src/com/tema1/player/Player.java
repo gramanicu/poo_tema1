@@ -10,6 +10,7 @@ import com.tema1.strategy.Strategy;
 import com.tema1.strategy.StrategyType;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Player {
     private int money;
@@ -17,12 +18,15 @@ public class Player {
     private Strategy strategy;
     private RoleType role;
     private ArrayList<Goods> cards;
+    private Stall stall;
     private Bag bag;
 
 
     private Player() {
         money = Constants.START_MONEY;
         cards = new ArrayList<>();
+        bag = new Bag();
+        stall = new Stall();
         playerCount++;
     }
 
@@ -107,16 +111,27 @@ public class Player {
      */
     public void createBag() {
         if (role == RoleType.Trader) {
-            strategy.createBag(cards);
+            bag = strategy.createBag(cards);
+            cards.clear();
         }
     }
 
     /**
-     * If the player is a sheriff, inspect the other players bags.
+     * Returns the current player bag (is intended to be by reference, not value).
+     * @return The players bag
      */
-    public void inspect() {
+    public Bag getBag() {
+        return this.bag;
+    }
+
+    /**
+     * If the player is a sheriff, inspect the other players bags.
+     * @param players The current list of players in the game
+     * @param cardsDeck The current deck of cards on the "table"
+     */
+    public void inspect(final ArrayList<Player> players, final Queue<Goods> cardsDeck) {
         if (role == RoleType.Sheriff) {
-            strategy.inspect();
+            strategy.inspect(players, cardsDeck);
         }
     }
 
@@ -124,7 +139,8 @@ public class Player {
      * Prepare a player for the next round.
      */
     public void prepareNextRound() {
-        cards.clear();
+        // TODO - check for errors later
+        stall.addItems(bag.getItems());
         bag.clear();
     }
 

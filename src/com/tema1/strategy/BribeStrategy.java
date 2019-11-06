@@ -2,8 +2,10 @@ package com.tema1.strategy;
 
 import com.tema1.goods.Goods;
 import com.tema1.player.Bag;
+import com.tema1.player.Player;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class BribeStrategy implements Strategy {
 
@@ -18,7 +20,9 @@ public class BribeStrategy implements Strategy {
     }
 
     @Override
-    public void inspect() {
+    public void inspect(final ArrayList<Player> players, final Queue<Goods> cardsDeck) {
 
     }
+
+
 }

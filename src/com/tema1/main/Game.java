@@ -129,7 +129,12 @@ final class Game {
         }
     }
 
-    private void inspection() { }
+    private void inspection() {
+        for (Player p : playerList) {
+            p.inspect(playerList, goodsList);
+        }
+    }
+
     private void shopSupplying() { }
 
 }
