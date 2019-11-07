@@ -109,7 +109,7 @@ public class Bag {
         }
 
         for (Goods item : goodsList) {
-            if (item.getType() == GoodsType.Illegal && item.getId() != declaredType.getId()) {
+            if (item.getType() == GoodsType.Illegal || item.getId() != declaredType.getId()) {
                 cardsDeck.add(item);
                 bribe -= item.getPenalty();
                 money += item.getPenalty();
