@@ -4,9 +4,12 @@ import com.tema1.game.Game;
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsType;
 import com.tema1.helpers.Constants;
+import com.tema1.helpers.RoleType;
 import com.tema1.player.Bag;
+import com.tema1.player.Player;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class GreedyStrategy extends BaseStrategy {
     /**
@@ -39,4 +42,29 @@ public class GreedyStrategy extends BaseStrategy {
 
         return bag;
     }
+
+    /**
+     * The sheriff will inspect the bags of the other players.
+     * @param players The list of players in the game
+     * @param cardsDeck The current deck of cards on the "table"
+     */
+    @Override
+    public void inspect(final ArrayList<Player> players, final Queue<Goods> cardsDeck) {
+        Player sheriff = getSheriff(players);
+
+        for (Player player : players) {
+            if (player.getRole() != RoleType.Sheriff) {
+                Bag bag = player.getBag();
+                // Check if he has enough money for a inspection
+                if (sheriff.getMoney() >= Constants.MIN_MONEY_FOR_INSPECTION) {
+                    if (!bag.hasBribe()) {
+                        sheriff.setMoney(bag.inspect(sheriff.getMoney(), cardsDeck));
+                    } else {
+                        sheriff.setMoney(sheriff.getMoney() + bag.takeBribe());
+                    }
+                }
+            }
+        }
+    }
+
 }

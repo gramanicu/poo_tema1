@@ -14,7 +14,6 @@ import java.util.Queue;
 public class BaseStrategy implements Strategy {
     public BaseStrategy() { }
 
-
     /**
      * Creates a new bag, based on the players strategy.
      * @param cards The items that the player has available
@@ -51,19 +50,7 @@ public class BaseStrategy implements Strategy {
      */
     @Override
     public void inspect(final ArrayList<Player> players, final Queue<Goods> cardsDeck) {
-        Player sheriff = null;
-        int sheriffIndex;
-        for (int i = 0; i < players.size(); i++) {
-            if (players.get(i).getRole() == RoleType.Sheriff) {
-                sheriff = players.get(i);
-                sheriffIndex = i;
-                break;
-            }
-        }
-
-        if (sheriff == null) {
-            return;
-        }
+        Player sheriff = getSheriff(players);
 
         for (Player player : players) {
             if (player.getRole() != RoleType.Sheriff) {
@@ -73,6 +60,22 @@ public class BaseStrategy implements Strategy {
                 }
             }
         }
+    }
+
+    /**
+     * Determines who is the sheriff.
+     * @param players The list of all players
+     * @return The sheriff
+     */
+    protected Player getSheriff(final ArrayList<Player> players) {
+        Player sheriff = null;
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getRole() == RoleType.Sheriff) {
+                sheriff = players.get(i);
+                break;
+            }
+        }
+        return sheriff;
     }
 
     /**

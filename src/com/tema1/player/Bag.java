@@ -77,6 +77,13 @@ public class Bag {
     }
 
     /**
+     * @return If the bag has bribe
+     */
+    public boolean hasBribe() {
+        return bribe > 0;
+    }
+
+    /**
      * Get the items in the bag.
      * @return The contained items
      */
