@@ -147,6 +147,7 @@ public class Player {
     public void createBag() {
         if (role == RoleType.Trader) {
             bag = strategy.createBag(cards, money);
+            money -= bag.getBribe();
             cards.clear();
         }
     }

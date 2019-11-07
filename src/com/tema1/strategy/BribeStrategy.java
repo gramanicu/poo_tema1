@@ -22,7 +22,6 @@ public class BribeStrategy extends BaseStrategy {
         ArrayList<FrequencyPair> listToFilter = sortedFrequencyList(cards);
         ArrayList<Goods> items = new ArrayList<>();
 
-        // Filter the goods into two separate list
         for (FrequencyPair pair : listToFilter) {
             for (int i = 0; i < pair.getFrequency(); i++) {
                 items.add(pair.getItem());
@@ -72,8 +71,12 @@ public class BribeStrategy extends BaseStrategy {
         int penalties = 0;
         int illegalCount = 0;
 
+        items = new ArrayList<>(cards);
+        ItemValueComparator comparator = new ItemValueComparator();
+        items.sort(comparator);
+
         for (Goods item : items) {
-            if (finalList.size() > Constants.MAX_BAG_SIZE) {
+            if (finalList.size() >= Constants.MAX_BAG_SIZE) {
                 break;
             }
 
