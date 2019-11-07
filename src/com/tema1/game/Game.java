@@ -46,21 +46,19 @@ public final class Game {
     // This must be unique
         // Load players strategies
         for (String strategy : data.getPlayerNames()) {
-            // This is modified until other strategies are implemented
-            playerList.add(new Player(StrategyType.Base));
-//            switch (strategy) {
-//                case "basic":
-//                    playerList.add(new Player(StrategyType.Base));
-//                    break;
-//                case "bribed":
-//                    playerList.add(new Player(StrategyType.Bribe));
-//                    break;
-//                case "greedy":
-//                    playerList.add(new Player(StrategyType.Greedy));
-//                    break;
-//                default:
-//                    break;
-//            }
+            switch (strategy) {
+                case "basic":
+                    playerList.add(new Player(StrategyType.Base));
+                    break;
+                case "bribed":
+                    playerList.add(new Player(StrategyType.Bribe));
+                    break;
+                case "greedy":
+                    playerList.add(new Player(StrategyType.Greedy));
+                    break;
+                default:
+                    break;
+            }
         }
 
         // Load assets cards
