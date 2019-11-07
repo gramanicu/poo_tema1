@@ -8,6 +8,6 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 public interface Strategy {
-    Bag createBag(ArrayList<Goods> cards);
+    Bag createBag(ArrayList<Goods> cards, int money);
     void inspect(ArrayList<Player> players, Queue<Goods> cardsDeck);
 }

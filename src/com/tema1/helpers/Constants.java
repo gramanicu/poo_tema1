@@ -7,5 +7,9 @@ public final class Constants {
     public static final int MAX_BAG_SIZE = 8;
     public static final int CARDS_EACH_ROUND = 10;
     public static final int MIN_MONEY_FOR_INSPECTION = 16;
+    public static final int MANY_ILLEGALS_BRIBE = 10;
+    public static final int FEW_ILLEGALS_BRIBE = 5;
+    public static final int LEGAL_FINE = 2;
+    public static final int ILLEGAL_FINE = 4;
     private Constants() { }
 }

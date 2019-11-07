@@ -110,6 +110,10 @@ public class Bag {
 
         for (Goods item : goodsList) {
             if (item.getType() == GoodsType.Illegal && item.getId() != declaredType.getId()) {
+                // Remove the bribe to add the fines
+                if (bribe > 0) {
+                    bribe = 0;
+                }
                 cardsDeck.add(item);
                 bribe -= item.getPenalty();
                 money += item.getPenalty();

@@ -15,11 +15,12 @@ public class GreedyStrategy extends BaseStrategy {
     /**
      * Creates a new bag, based on the players strategy.
      * @param cards The items that the player has available
+     * @param money The amount of money the player has available (for bribes and penalties)
      * @return The bag with the selected items
      */
     @Override
-    public Bag createBag(final ArrayList<Goods> cards) {
-        Bag bag = super.createBag(cards);
+    public Bag createBag(final ArrayList<Goods> cards,final int money) {
+        Bag bag = super.createBag(cards, money);
 
         if (Game.getInstance().isOddRound()) {
             if (bag.getItems().size() < Constants.MAX_BAG_SIZE && bag.getItems().size() > 0) {

@@ -12,18 +12,17 @@ import java.util.ArrayList;
 import java.util.Queue;
 
 public class BaseStrategy implements Strategy {
-    public BaseStrategy() { }
-
     /**
      * Creates a new bag, based on the players strategy.
      * @param cards The items that the player has available
+     * @param money The amount of money the player has available (for bribes and penalties)
      * @return The bag with the selected items
      */
     @Override
-    public Bag createBag(final ArrayList<Goods> cards) {
+    public Bag createBag(final ArrayList<Goods> cards, final int money) {
         Bag bag = new Bag();
         // Gets the best item/items available for the strategy
-        FrequencyPair item = chooseGoods(cards);
+        FrequencyPair item = chooseGood(cards);
 
         // If the item type is illegal, use the most profitable illegal item
         if (item.getItem().getType() == GoodsType.Illegal) {
@@ -67,7 +66,7 @@ public class BaseStrategy implements Strategy {
      * @param players The list of all players
      * @return The sheriff
      */
-    protected Player getSheriff(final ArrayList<Player> players) {
+    Player getSheriff(final ArrayList<Player> players) {
         Player sheriff = null;
         for (int i = 0; i < players.size(); i++) {
             if (players.get(i).getRole() == RoleType.Sheriff) {
@@ -79,11 +78,28 @@ public class BaseStrategy implements Strategy {
     }
 
     /**
-     * Returns item/items, according to the strategy.
-     * @param cards The items to be sorted/filtered
-     * @return A frequency pair, representing a item type and how many of it
+     * Returns a list of unique items.
+     * @param cards The cards from which to extract unique items
+     * @return The unique items list (array)
      */
-    protected FrequencyPair chooseGoods(final ArrayList<Goods> cards) {
+    ArrayList<Goods> getUniqueItems(final ArrayList<Goods> cards) {
+        ArrayList<Goods> uniqueItems = new ArrayList<>();
+
+        for (Goods item : cards) {
+            if (!uniqueItems.contains(item)) {
+                uniqueItems.add(item);
+            }
+        }
+
+        return uniqueItems;
+    }
+
+    /**
+     * Returns a sorted frequency list.
+     * @param cards The cards to sort
+     * @return The frequency list
+     */
+    ArrayList<FrequencyPair> sortedFrequencyList(final ArrayList<Goods> cards) {
         ArrayList<Goods> uniqueItems = new ArrayList<>();
         ArrayList<Integer> frequency = new ArrayList<Integer>();
 
@@ -103,21 +119,32 @@ public class BaseStrategy implements Strategy {
             }
         }
 
-        ArrayList<FrequencyPair> listToSort = new ArrayList<>();
+        ArrayList<FrequencyPair> list = new ArrayList<>();
 
         // Combine the two arrays into a single frequency array
         for (Goods item : uniqueItems) {
-            listToSort.add(new FrequencyPair(item, frequency.get(uniqueItems.indexOf(item))));
+            list.add(new FrequencyPair(item, frequency.get(uniqueItems.indexOf(item))));
         }
 
         // Sort the array, according to the strategy
         FrequencyPairComparator compare = new FrequencyPairComparator();
-        listToSort.sort(compare);
+        list.sort(compare);
 
+        return list;
+    }
+
+    /**
+     * Returns item/items, according to the strategy.
+     * @param cards The items to be sorted/filtered
+     * @return A frequency pair, representing a item type and how many of it
+     */
+    FrequencyPair chooseGood(final ArrayList<Goods> cards) {
+        ArrayList<FrequencyPair> listToFilter = sortedFrequencyList(cards);
         ArrayList<FrequencyPair> sortedList = new ArrayList<>();
+        ArrayList<Goods> uniqueItems = getUniqueItems(cards);
 
         // Filter out the illegal goods
-        for (FrequencyPair pair : listToSort) {
+        for (FrequencyPair pair : listToFilter) {
             if (pair.getItem().getType() == GoodsType.Legal) {
                 sortedList.add(pair);
             }
@@ -132,6 +159,5 @@ public class BaseStrategy implements Strategy {
         } else {
             return sortedList.get(0);
         }
-
     }
 }
