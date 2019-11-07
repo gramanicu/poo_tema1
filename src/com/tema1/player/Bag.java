@@ -92,16 +92,21 @@ public class Bag {
      */
     public int inspect(final int sheriffMoney, final Queue<Goods> cardsDeck) {
         int money = sheriffMoney;
+        ArrayList<Goods> goodsToRemove = new ArrayList<>();
         for (Goods item : goodsList) {
             if (item.getType() == GoodsType.Illegal && item.getId() != declaredType.getId()) {
                 cardsDeck.add(item);
                 bribe -= item.getPenalty();
                 money += item.getPenalty();
-                goodsList.remove(item);
+                goodsToRemove.add(item);
             } else {
                 bribe += item.getPenalty();
                 money -= item.getPenalty();
             }
+        }
+
+        for (Goods removable : goodsToRemove) {
+            goodsList.remove(removable);
         }
 
         return money;
