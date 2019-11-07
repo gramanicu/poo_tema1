@@ -69,4 +69,4 @@ fabric.properties
 
 *checkstyle*
 *.out
-.zip
+*.zip
