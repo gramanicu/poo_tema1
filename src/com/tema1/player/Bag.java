@@ -100,6 +100,14 @@ public class Bag {
     public int inspect(final int sheriffMoney, final Queue<Goods> cardsDeck) {
         int money = sheriffMoney;
         ArrayList<Goods> goodsToRemove = new ArrayList<>();
+        boolean liar = false;
+
+        for (Goods item : goodsList) {
+            if(item.getId() != declaredType.getId()) {
+                liar = true;
+            }
+        }
+
         for (Goods item : goodsList) {
             if (item.getType() == GoodsType.Illegal && item.getId() != declaredType.getId()) {
                 cardsDeck.add(item);
@@ -107,8 +115,10 @@ public class Bag {
                 money += item.getPenalty();
                 goodsToRemove.add(item);
             } else {
-                bribe += item.getPenalty();
-                money -= item.getPenalty();
+                if(!liar) {
+                    bribe += item.getPenalty();
+                    money -= item.getPenalty();
+                }
             }
         }
 

@@ -229,7 +229,7 @@ public final class Game {
      */
     public boolean isOddRound() {
         // First round is odd, but in reality, it's not (0), so ...
-        return (currentRound % 2) == 0;
+        return (currentRound % 2) == 1;
     }
 
 }

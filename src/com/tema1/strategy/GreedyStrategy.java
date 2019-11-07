@@ -21,8 +21,8 @@ public class GreedyStrategy extends BaseStrategy {
     public Bag createBag(final ArrayList<Goods> cards) {
         Bag bag = super.createBag(cards);
 
-        if (!Game.getInstance().isOddRound()) {
-            if (bag.getItems().size() < Constants.MAX_BAG_SIZE && bag.getItems().size() > 1) {
+        if (Game.getInstance().isOddRound()) {
+            if (bag.getItems().size() < Constants.MAX_BAG_SIZE && bag.getItems().size() > 0) {
                 // If we can add a illegal good
                 ArrayList<Goods> uniqueItems = new ArrayList<>();
 
