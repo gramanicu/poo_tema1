@@ -1,12 +1,2 @@
 Starting audit...
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/strategy/BribeStrategy.java:3:47: '{' is not preceded with whitespace. [WhitespaceAround]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/helpers/Constants.java:3:1: Utility classes should not have a public or default constructor. [HideUtilityClassConstructor]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:4: Using the '.*' form of import should be avoided - com.tema1.strategy.*. [AvoidStarImport]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:16:12: Parameter strategy should be final. [FinalParameters]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:21:5: Class 'Player' looks like designed for extension (can be subclassed), but the method 'getMoney' does not have javadoc that explains how to do that safely. If class is not designed for extension consider making the class 'Player' final or making the method 'getMoney' static/final/abstract/empty, or adding allowed annotation for the method. [DesignForExtension]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:33:30: Parameter strategy should be final. [FinalParameters]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:34:11: 'if' is not followed by whitespace. [WhitespaceAround]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:34:12: '(' is followed by whitespace. [ParenPad]
-[ERROR] /home/nicolae/College/temePOO/poo_tema1/src/com/tema1/main/Player.java:34:42: ')' is preceded with whitespace. [ParenPad]
 Audit done.
-Checkstyle ends with 9 errors.
