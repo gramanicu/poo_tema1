@@ -164,15 +164,18 @@ public class BribeStrategy extends BaseStrategy {
             sheriff.setMoney(bag.inspect(sheriff.getMoney(), cardsDeck));
         }
 
-        // Inspect Right Player
+        // If there are only two players, the left and the right one are the same
         int rightID = sheriffID + 1;
         if (rightID == players.size()) {
             rightID = 0;
         }
-        player = players.get(rightID);
-        bag = player.getBag();
-        if (sheriff.getMoney() >= Constants.MIN_MONEY_FOR_INSPECTION) {
-            sheriff.setMoney(bag.inspect(sheriff.getMoney(), cardsDeck));
+        if (players.size() > 2) {
+            // Inspect Right Player
+            player = players.get(rightID);
+            bag = player.getBag();
+            if (sheriff.getMoney() >= Constants.MIN_MONEY_FOR_INSPECTION) {
+                sheriff.setMoney(bag.inspect(sheriff.getMoney(), cardsDeck));
+            }
         }
 
         for (int id = 0; id < players.size(); id++) {
