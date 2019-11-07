@@ -2,6 +2,8 @@ package com.tema1.game;
 
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
+import com.tema1.goods.GoodsType;
+import com.tema1.goods.LegalGoods;
 import com.tema1.helpers.Constants;
 import com.tema1.helpers.RoleType;
 import com.tema1.main.GameInput;
@@ -13,6 +15,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public final class Game {
+    private static final int MAX_LEGAL_ID = 10;
     private static Game instance = null;
     private ArrayList<Player> playerList;
     private Queue<Goods> goodsList;
@@ -85,6 +88,70 @@ public final class Game {
     }
 
     private void computeScores() {
+        ArrayList<Goods> goods = new ArrayList<>();
+        for (int i = 0; i < MAX_LEGAL_ID; i++) {
+            goods.add(GoodsFactory.getInstance().getGoodsById(i));
+        }
+
+        // Compute king/queen bonus
+        for (Goods goodChecked : goods) {
+            // If this item is not legal, go to the next one
+            if (goodChecked.getType() == GoodsType.Illegal) {
+                continue;
+            }
+
+            ArrayList<Integer> ids = new ArrayList<>();
+            ArrayList<Integer> frequencies = new ArrayList<>();
+
+            for (Player player : playerList) {
+                // Search through all players items
+                for (Goods toCheck : player.getStallItems()) {
+                    // Check if the items has the correct id
+                    if (toCheck.getId() == goodChecked.getId()) {
+                        if (!ids.contains(player.getId())) {
+                            ids.add(player.getId());
+                            frequencies.add(1);
+                        } else {
+                            int index = ids.indexOf(player.getId());
+                            Integer value = frequencies.get(index);
+                            value = value + 1;
+                            frequencies.set(index, value);
+                        }
+                    }
+                }
+            }
+
+            switch (ids.size()) {
+                case 0:
+                    // If no-one has this item, go to the next one.
+                    continue;
+                case 1:
+                    // If only 1 player has the item, he is automatically the king
+                     playerList.get(ids.get(0))
+                             .addProfitBonus(((LegalGoods) goodChecked).getKingBonus());
+                     continue;
+                default:
+                    break;
+            }
+
+            ArrayList<IDFrequencyPair> frequencyList = new ArrayList<>();
+            // Combine the two arrays
+            for (Integer id : ids) {
+                frequencyList.add(new IDFrequencyPair(id, frequencies.get(ids.indexOf(id))));
+            }
+
+            // Sort the list
+            IDFrequencyPairComparator comparator = new IDFrequencyPairComparator();
+            frequencyList.sort(comparator);
+
+            // Set the king/queen
+            int kingId = frequencyList.get(0).getId();
+            int queenId = frequencyList.get(1).getId();
+
+            playerList.get(kingId).addProfitBonus(((LegalGoods) goodChecked).getKingBonus());
+            playerList.get(queenId).addProfitBonus(((LegalGoods) goodChecked).getQueenBonus());
+        }
+
         LeaderBoard.getInstance().addScores(playerList);
         LeaderBoard.getInstance().printLeaderBoard();
     }

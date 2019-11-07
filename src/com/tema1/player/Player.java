@@ -22,6 +22,7 @@ public class Player {
     private Bag bag;
     private int id;
     private StrategyType strategyType;
+    private int profits;
 
 
     private Player() {
@@ -31,6 +32,7 @@ public class Player {
         stall = new Stall();
         id = playerCount;
         playerCount++;
+        profits = -1;
     }
 
     public Player(final StrategyType strategy) {
@@ -123,6 +125,13 @@ public class Player {
     }
 
     /**
+     * @return The items the player has brought to his "shop"
+     */
+    public ArrayList<Goods> getStallItems() {
+        return stall.getItems();
+    }
+
+    /**
      * The player will draw the cards from the deck.
      * @param items The cards that he will have
      */
@@ -172,12 +181,31 @@ public class Player {
         }
     }
 
+    private void computeProfits() {
+        profits = money + stall.getScore();
+    }
+
+    /**
+     * Add bonus for king/queen
+     * @param bonus The bonus value
+     */
+    public void addProfitBonus(final int bonus) {
+        if (profits == -1) {
+            computeProfits();
+        }
+
+        profits += bonus;
+    }
+
     /**
      * Return the score the player has at the end.
      * @return The score
      */
-    public int computeProfits() {
-        return money + stall.getScore();
+    public int getProfit() {
+        if (profits == -1) {
+            computeProfits();
+        }
+        return profits;
     }
 
 }

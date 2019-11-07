@@ -23,7 +23,7 @@ public final class LeaderBoard {
 
     private void prepareTable() {
         for (Player player : players) {
-            table.add(new Score(player.getId(), player.getStrategy(), player.computeProfits()));
+            table.add(new Score(player.getId(), player.getStrategy(), player.getProfit()));
         }
     }
 
