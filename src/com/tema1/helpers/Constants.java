@@ -6,6 +6,6 @@ public final class Constants {
     public static final int MAX_PLAYER_COUNT = 7;
     public static final int MAX_BAG_SIZE = 8;
     public static final int CARDS_EACH_ROUND = 10;
-
+    public static final int MIN_MONEY_FOR_INSPECTION = 16;
     private Constants() { }
 }

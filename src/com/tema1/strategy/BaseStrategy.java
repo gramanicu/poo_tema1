@@ -3,6 +3,7 @@ package com.tema1.strategy;
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
 import com.tema1.goods.GoodsType;
+import com.tema1.helpers.Constants;
 import com.tema1.helpers.RoleType;
 import com.tema1.player.Bag;
 import com.tema1.player.Player;
@@ -13,7 +14,6 @@ import java.util.Queue;
 public class BaseStrategy implements Strategy {
     public BaseStrategy() { }
 
-    private static final int MIN_MONEY_FOR_INSPECTION = 16;
 
     /**
      * Creates a new bag, based on the players strategy.
@@ -68,7 +68,7 @@ public class BaseStrategy implements Strategy {
         for (Player player : players) {
             if (player.getRole() != RoleType.Sheriff) {
                 Bag bag = player.getBag();
-                if (sheriff.getMoney() >= MIN_MONEY_FOR_INSPECTION) {
+                if (sheriff.getMoney() >= Constants.MIN_MONEY_FOR_INSPECTION) {
                     sheriff.setMoney(bag.inspect(sheriff.getMoney(), cardsDeck));
                 }
             }
@@ -80,7 +80,7 @@ public class BaseStrategy implements Strategy {
      * @param cards The items to be sorted/filtered
      * @return A frequency pair, representing a item type and how many of it
      */
-    private FrequencyPair chooseGoods(final ArrayList<Goods> cards) {
+    protected FrequencyPair chooseGoods(final ArrayList<Goods> cards) {
         ArrayList<Goods> uniqueItems = new ArrayList<>();
         ArrayList<Integer> frequency = new ArrayList<Integer>();
 

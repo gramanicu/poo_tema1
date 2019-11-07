@@ -20,7 +20,7 @@ public final class Game {
     private ArrayList<Player> playerList;
     private Queue<Goods> goodsList;
     private int rounds;
-    private int currentRound;
+    private static int currentRound;
     private GoodsFactory assetCreator;
     private boolean canRun;
 
@@ -221,6 +221,15 @@ public final class Game {
         for (Player p : playerList) {
             p.prepareNextRound();
         }
+    }
+
+    /**
+     * Check if the game is in a odd round.
+     * @return isOddRound
+     */
+    public boolean isOddRound() {
+        // First round is odd, but in reality, it's not (0), so ...
+        return (currentRound % 2) == 0;
     }
 
 }

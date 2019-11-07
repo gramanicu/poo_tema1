@@ -9,6 +9,5 @@ import java.util.Queue;
 
 public interface Strategy {
     Bag createBag(ArrayList<Goods> cards);
-
     void inspect(ArrayList<Player> players, Queue<Goods> cardsDeck);
 }
