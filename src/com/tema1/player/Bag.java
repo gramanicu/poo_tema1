@@ -103,7 +103,7 @@ public class Bag {
         boolean liar = false;
 
         for (Goods item : goodsList) {
-            if(item.getId() != declaredType.getId()) {
+            if (item.getId() != declaredType.getId()) {
                 liar = true;
             }
         }
@@ -115,7 +115,7 @@ public class Bag {
                 money += item.getPenalty();
                 goodsToRemove.add(item);
             } else {
-                if(!liar) {
+                if (!liar) {
                     bribe += item.getPenalty();
                     money -= item.getPenalty();
                 }

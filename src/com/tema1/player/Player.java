@@ -186,7 +186,7 @@ public class Player {
     }
 
     /**
-     * Add bonus for king/queen
+     * Add bonus for king/queen.
      * @param bonus The bonus value
      */
     public void addProfitBonus(final int bonus) {
