@@ -13,6 +13,8 @@ import java.util.Queue;
 public class BaseStrategy implements Strategy {
     public BaseStrategy() { }
 
+    private static final int MIN_MONEY_FOR_INSPECTION = 16;
+
     /**
      * Creates a new bag, based on the players strategy.
      * @param cards The items that the player has available
@@ -49,9 +51,26 @@ public class BaseStrategy implements Strategy {
      */
     @Override
     public void inspect(final ArrayList<Player> players, final Queue<Goods> cardsDeck) {
+        Player sheriff = null;
+        int sheriffIndex;
+        for (int i = 0; i < players.size(); i++) {
+            if (players.get(i).getRole() == RoleType.Sheriff) {
+                sheriff = players.get(i);
+                sheriffIndex = i;
+                break;
+            }
+        }
+
+        if (sheriff == null) {
+            return;
+        }
+
         for (Player player : players) {
             if (player.getRole() != RoleType.Sheriff) {
                 Bag bag = player.getBag();
+                if (sheriff.getMoney() >= MIN_MONEY_FOR_INSPECTION) {
+                    sheriff.setMoney(bag.inspect(sheriff.getMoney(), cardsDeck));
+                }
             }
         }
     }
@@ -89,7 +108,7 @@ public class BaseStrategy implements Strategy {
         }
 
         // Sort the array, according to the strategy
-        FrequencyPairCompare compare = new FrequencyPairCompare();
+        FrequencyPairComparator compare = new FrequencyPairComparator();
         listToSort.sort(compare);
 
         ArrayList<FrequencyPair> sortedList = new ArrayList<>();
@@ -104,7 +123,7 @@ public class BaseStrategy implements Strategy {
         // Check if there are any legal goods
         if (sortedList.size() == 0) {
             // If there are no legal goods
-            ItemValueCompare valueCompare = new ItemValueCompare();
+            ItemValueComparator valueCompare = new ItemValueComparator();
             uniqueItems.sort(valueCompare);
             return new FrequencyPair(uniqueItems.get(0), 1);
         } else {

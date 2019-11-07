@@ -1,19 +1,19 @@
-package com.tema1.main;
+package com.tema1.game;
 
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
 import com.tema1.helpers.Constants;
 import com.tema1.helpers.RoleType;
+import com.tema1.main.GameInput;
 import com.tema1.player.Player;
 import com.tema1.strategy.StrategyType;
 
-import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
-// This must be unique
-final class Game {
+public final class Game {
+    private static Game instance = null;
     private ArrayList<Player> playerList;
     private Queue<Goods> goodsList;
     private int rounds;
@@ -21,7 +21,14 @@ final class Game {
     private GoodsFactory assetCreator;
     private boolean canRun;
 
-    Game() {
+    public static Game getInstance() {
+        if (instance == null) {
+            instance = new Game();
+        }
+        return instance;
+    }
+
+    private Game() {
         currentRound = 0;
         playerList = new ArrayList<>();
         goodsList = new LinkedList<>();
@@ -32,7 +39,7 @@ final class Game {
      * Loads all the data to run the game.
      * @param data The GameInput data
      */
-    void load(final GameInput data) {
+    public void load(final GameInput data) {
     // This must be unique
         // Load players strategies
         for (String strategy : data.getPlayerNames()) {
@@ -64,7 +71,7 @@ final class Game {
     /**
      * Starts the game.
      */
-    void run() {
+    public void run() {
         if (!canRun) {
             return;
         }
@@ -72,6 +79,14 @@ final class Game {
         while (currentRound < rounds) {
             currentRound = doRound(currentRound);
         }
+
+        // When the game ends
+        computeScores();
+    }
+
+    private void computeScores() {
+        LeaderBoard.getInstance().addScores(playerList);
+        LeaderBoard.getInstance().printLeaderBoard();
     }
 
     /**
@@ -135,6 +150,10 @@ final class Game {
         }
     }
 
-    private void shopSupplying() { }
+    private void shopSupplying() {
+        for (Player p : playerList) {
+            p.prepareNextRound();
+        }
+    }
 
 }

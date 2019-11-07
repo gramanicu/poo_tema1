@@ -2,7 +2,7 @@ package com.tema1.strategy;
 
 import java.util.Comparator;
 
-class FrequencyPairCompare implements Comparator<FrequencyPair> {
+class FrequencyPairComparator implements Comparator<FrequencyPair> {
     /**
      * A method used to sort the FrequencyPair list by the frequency.
      * @param o1 first FrequencyPair

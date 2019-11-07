@@ -1,5 +1,7 @@
 package com.tema1.main;
 
+import com.tema1.game.Game;
+
 public final class Main {
     private Main() {
         // just to trick checkstyle
@@ -9,8 +11,8 @@ public final class Main {
         GameInputLoader gameInputLoader = new GameInputLoader(args[0], args[1]);
         GameInput gameInput = gameInputLoader.load();
 
-        Game game = new Game();
-        game.load(gameInput);
-        game.run();
+
+        Game.getInstance().load(gameInput);
+        Game.getInstance().run();
     }
 }

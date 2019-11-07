@@ -4,7 +4,7 @@ import com.tema1.goods.Goods;
 
 import java.util.Comparator;
 
-public class ItemValueCompare implements Comparator<Goods> {
+public class ItemValueComparator implements Comparator<Goods> {
     /**
      * Compares two goods using the value they have.
      * @param o1 The first good

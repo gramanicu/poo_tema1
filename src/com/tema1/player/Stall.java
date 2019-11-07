@@ -1,8 +1,11 @@
 package com.tema1.player;
 
 import com.tema1.goods.Goods;
+import com.tema1.goods.GoodsType;
+import com.tema1.goods.IllegalGoods;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Stall {
     private ArrayList<Goods> goodsList;
@@ -16,7 +19,19 @@ public class Stall {
      * @param items The items to be added
      */
     public void addItems(final ArrayList<Goods> items) {
-        goodsList.addAll(items);
+        for (Goods item : items) {
+            goodsList.add(item);
+            if (item.getType() == GoodsType.Illegal) {
+                // Add the bonuses
+                for (Map.Entry<Goods, Integer> entry
+                        : ((IllegalGoods) item).getIllegalBonus().entrySet()) {
+                    for (int i = 0; i < entry.getValue(); i++) {
+                        goodsList.add(entry.getKey());
+                    }
+                }
+
+            }
+        }
     }
 
     /**
@@ -24,9 +39,10 @@ public class Stall {
      * @return The profit generated
      */
     public int getScore() {
-        // TODO
         int score = 0;
-        score = goodsList.get(0).getProfit();
+        for (Goods item : goodsList) {
+            score += item.getProfit();
+        }
         return score;
     }
 }

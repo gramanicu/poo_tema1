@@ -20,6 +20,8 @@ public class Player {
     private ArrayList<Goods> cards;
     private Stall stall;
     private Bag bag;
+    private int id;
+    private StrategyType strategyType;
 
 
     private Player() {
@@ -27,12 +29,28 @@ public class Player {
         cards = new ArrayList<>();
         bag = new Bag();
         stall = new Stall();
+        id = playerCount;
         playerCount++;
     }
 
     public Player(final StrategyType strategy) {
         this();
+        strategyType = strategy;
         setStrategy(strategy);
+    }
+
+    /**
+     * @return The id of the player
+     */
+    public int getId() {
+        return id;
+    }
+
+    /**
+     * @return The strategy the player adopted
+     */
+    public StrategyType getStrategy() {
+        return strategyType;
     }
 
     /**
@@ -40,6 +58,14 @@ public class Player {
      */
     public int getMoney() {
         return money;
+    }
+
+    /**
+     * Changes how much money the player has.
+     * @param money The new amount of money
+     */
+    public void setMoney(final int money) {
+        this.money = money;
     }
 
     /**
@@ -139,11 +165,20 @@ public class Player {
      * Prepare a player for the next round.
      */
     public void prepareNextRound() {
-        // TODO - check for errors later
-        stall.addItems(bag.getItems());
-        bag.clear();
+        if (role == RoleType.Trader) {
+            stall.addItems(bag.getItems());
+            money += bag.getBribe();
+            bag.clear();
+        }
     }
 
+    /**
+     * Return the score the player has at the end.
+     * @return The score
+     */
+    public int computeProfits() {
+        return money + stall.getScore();
+    }
 
 }
 

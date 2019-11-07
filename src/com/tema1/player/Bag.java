@@ -2,9 +2,11 @@ package com.tema1.player;
 
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
+import com.tema1.goods.GoodsType;
 import com.tema1.helpers.Constants;
 
 import java.util.ArrayList;
+import java.util.Queue;
 
 public class Bag {
     private ArrayList<Goods> goodsList;
@@ -57,11 +59,52 @@ public class Bag {
     }
 
     /**
+     * Give the bribe to the sheriff.
+     * @return The bribe
+     */
+    public int takeBribe() {
+        int bribeTaken = bribe;
+        bribe = 0;
+        return bribeTaken;
+    }
+
+    /**
+     * Return the bribe in the bag (to update player money).
+     * @return The bribe
+     */
+    public int getBribe() {
+        return bribe;
+    }
+
+    /**
      * Get the items in the bag.
      * @return The contained items
      */
     public ArrayList<Goods> getItems() {
         return goodsList;
+    }
+
+    /**
+     * The sheriff inspects the bag.
+     * @param sheriffMoney The current money the sheriff has
+     * @param cardsDeck The current deck of cards (to add "contraband")
+     * @return The money the sheriff remains with
+     */
+    public int inspect(final int sheriffMoney, final Queue<Goods> cardsDeck) {
+        int money = sheriffMoney;
+        for (Goods item : goodsList) {
+            if (item.getType() == GoodsType.Illegal && item.getId() != declaredType.getId()) {
+                cardsDeck.add(item);
+                bribe -= item.getPenalty();
+                money += item.getPenalty();
+                goodsList.remove(item);
+            } else {
+                bribe += item.getPenalty();
+                money -= item.getPenalty();
+            }
+        }
+
+        return money;
     }
 
     /**
