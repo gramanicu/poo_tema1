@@ -59,7 +59,7 @@ public class BribeStrategy extends BaseStrategy {
             if (legalItems.size() == 0) {
                 // Choose the best illegal good
                 FrequencyPair itemToAdd = listToFilter.get(0);
-                bag.addItem(itemToAdd.getItem(), itemToAdd.getFrequency());
+                bag.addItem(itemToAdd.getItem());
 
                 // Declare it as apples
                 bag.setBribe(0);
