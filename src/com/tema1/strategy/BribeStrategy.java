@@ -65,6 +65,11 @@ public class BribeStrategy extends BaseStrategy {
                 bag.setBribe(0);
                 bag.declareItems(GoodsFactory.getInstance().getGoodsById(0));
                 return bag;
+            } else {
+                bag.addItem(legalItems.get(0).getItem(), legalItems.get(0).getFrequency());
+                bag.setBribe(0);
+                bag.declareItems(legalItems.get(0).getItem());
+                return bag;
             }
         }
 
