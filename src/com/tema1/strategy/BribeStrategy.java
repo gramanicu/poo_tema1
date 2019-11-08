@@ -85,13 +85,6 @@ public class BribeStrategy extends BaseStrategy {
                 illegalCount++;
             }
 
-            // The bribe "penalty"
-            if (illegalCount > 2) {
-                penalty += Constants.MANY_ILLEGALS_BRIBE;
-            } else if (illegalCount > 0) {
-                penalty += Constants.FEW_ILLEGALS_BRIBE;
-            }
-
             if (penalties + penalty < money) {
                 finalList.add(item);
                 penalties += item.getPenalty();
