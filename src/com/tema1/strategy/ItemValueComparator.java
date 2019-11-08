@@ -13,6 +13,10 @@ public class ItemValueComparator implements Comparator<Goods> {
      */
     @Override
     public int compare(final Goods o1, final Goods o2) {
-        return o2.getProfit() - o1.getProfit();
+        int diff = o2.getProfit() - o1.getProfit();
+        if (diff != 0) {
+            return diff;
+        }
+        return o2.getId() - o1.getId();
     }
 }

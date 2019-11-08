@@ -2,7 +2,6 @@ package com.tema1.game;
 
 import com.tema1.goods.Goods;
 import com.tema1.goods.GoodsFactory;
-import com.tema1.goods.GoodsType;
 import com.tema1.goods.LegalGoods;
 import com.tema1.helpers.Constants;
 import com.tema1.helpers.RoleType;
@@ -95,11 +94,6 @@ public final class Game {
 
         // Compute king/queen bonus
         for (Goods goodChecked : goods) {
-            // If this item is not legal, go to the next one
-            if (goodChecked.getType() == GoodsType.Illegal) {
-                continue;
-            }
-
             ArrayList<Integer> ids = new ArrayList<>();
             ArrayList<Integer> frequencies = new ArrayList<>();
 
@@ -107,7 +101,9 @@ public final class Game {
                 // Search through all players items
                 for (Goods toCheck : player.getStallItems()) {
                     // Check if the items has the correct id
-                    if (toCheck.getId() == goodChecked.getId()) {
+                    int toCheckId = toCheck.getId();
+                    int goodCheckedId = goodChecked.getId();
+                    if (toCheckId == goodCheckedId) {
                         if (!ids.contains(player.getId())) {
                             ids.add(player.getId());
                             frequencies.add(1);
