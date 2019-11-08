@@ -86,15 +86,14 @@ public class BribeStrategy extends BaseStrategy {
             }
 
             int penalty = item.getPenalty();
-            if (item.getType() == GoodsType.Illegal) {
-                illegalCount++;
-            }
+
 
             if (penalties + penalty < money) {
+                if (item.getType() == GoodsType.Illegal) {
+                    illegalCount++;
+                }
                 finalList.add(item);
                 penalties += item.getPenalty();
-            } else {
-                break;
             }
         }
 

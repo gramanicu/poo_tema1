@@ -203,6 +203,12 @@ public class Player {
      * @return The score
      */
     public int getProfit() {
+//        System.out.println(this.id);
+//        for (Goods good : this.getStallItems()) {
+//            System.out.print(good.getId());
+//            System.out.print(" ");
+//        }
+//        System.out.println('\n');
         if (profits == -1) {
             computeProfits();
         }
