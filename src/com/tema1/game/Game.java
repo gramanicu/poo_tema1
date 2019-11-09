@@ -7,7 +7,7 @@ import com.tema1.helpers.Constants;
 import com.tema1.helpers.RoleType;
 import com.tema1.main.GameInput;
 import com.tema1.player.Player;
-import com.tema1.strategy.StrategyType;
+import com.tema1.helpers.StrategyType;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -42,7 +42,6 @@ public final class Game {
      * @param data The GameInput data
      */
     public void load(final GameInput data) {
-    // This must be unique
         // Load players strategies
         for (String strategy : data.getPlayerNames()) {
             switch (strategy) {

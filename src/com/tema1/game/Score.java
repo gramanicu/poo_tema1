@@ -1,6 +1,6 @@
 package com.tema1.game;
 
-import com.tema1.strategy.StrategyType;
+import com.tema1.helpers.StrategyType;
 
 public class Score {
     private int id;

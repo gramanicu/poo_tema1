@@ -1,4 +1,4 @@
-package com.tema1.strategy;
+package com.tema1.helpers;
 
 public enum StrategyType {
     Base, Bribe, Greedy;

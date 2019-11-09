@@ -43,8 +43,13 @@ public class BribeStrategy extends BaseStrategy {
             return bag;
         }
 
-        // If there are illegal items, check that he has money for penalties
-        if (money < Constants.FEW_ILLEGALS_BRIBE + Constants.ILLEGAL_FINE) {
+        /*
+         If there are illegal items, check that he has money for penalties
+         Note:  Initially, I checked if he has money for the fine and bribe, but:
+                because the bribe will return to the player if he is checked, he
+                can pay the fine using the bribe.
+        */
+        if (money < Constants.ILLEGAL_FINE) {
             // Play base strategy if he doesn't have enough money
             ArrayList<FrequencyPair> legalItems = new ArrayList<>();
 

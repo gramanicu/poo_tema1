@@ -7,7 +7,7 @@ import com.tema1.strategy.BaseStrategy;
 import com.tema1.strategy.BribeStrategy;
 import com.tema1.strategy.GreedyStrategy;
 import com.tema1.strategy.Strategy;
-import com.tema1.strategy.StrategyType;
+import com.tema1.helpers.StrategyType;
 
 import java.util.ArrayList;
 import java.util.Queue;
